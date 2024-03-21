@@ -30,4 +30,37 @@ export default class TodosController {
       };
       res.json(response);
     }
+
+    static async apiGetTodoByID(req, res, next) {
+      try {
+        const id = req.params.id;
+
+        // if (!isValidObjectId(id)) { 
+        //   return res.status(400).json({ error: "Invalid ID" });
+        // }
+        if (!id) {
+          return res.status(400).json({ error: "Missing or invalid ID" });
+        }
+    
+        const todo = await TodoListDAO.getTodoByID(id);
+
+        if (!todo) {
+          res.status(404).json({ error: "Not found" });
+          return;
+        }
+
+        const responseTodo = {
+          
+          title: todo.title,
+          description: todo.description,
+          status: todo.status
+        };
+
+        res.json(responseTodo);
+      } catch (e) {
+        console.log(`api, ${e}`);
+        res.status(500).json({ error: e });
+      }
+    }
+
   }
