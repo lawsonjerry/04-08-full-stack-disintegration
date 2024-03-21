@@ -69,4 +69,19 @@ export default class TodoListDAO {
       throw e;
     }
   }
+//Creates a new task. Expects `title`, `description`, and `status` in the request body.
+  static async addTodo(title, description, status) {
+    try {
+      const newTodo = {
+        title: title,
+        description: description,
+        status: status,
+      };
+      return await persuasion.insertOne(newTodo);
+    } catch (e) {
+      console.error(`Unable to post review: ${e}`);
+      return { error: e };
+    }
+  }
+
 }
