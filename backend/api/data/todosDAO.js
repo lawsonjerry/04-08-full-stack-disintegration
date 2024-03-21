@@ -99,4 +99,17 @@ export default class TodoListDAO {
     }
   }
 
+  static async deleteTodo(taskId) {
+    try {
+      const deleteResponse = await persuasion.deleteOne({
+        _id: taskId
+      });
+
+      return deleteResponse;
+    } catch (e) {
+      console.error(`Unable to delete review: ${e}`);
+      return { error: e };
+    }
+  }
+
 }

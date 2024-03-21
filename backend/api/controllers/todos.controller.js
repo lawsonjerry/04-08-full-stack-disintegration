@@ -67,7 +67,6 @@ export default class TodosController {
         title,
         description,
         status
-
       );
       res.json({ status: "success" });
     } catch (e) {
@@ -77,31 +76,45 @@ export default class TodosController {
 
   static async apiUpdateTodo(req, res, next) {
     try {
-      const reviewId = req.body.review_id
-      const text = req.body.text
-      const date = new Date()
+      const reviewId = req.body.review_id;
+      const text = req.body.text;
 
       const reviewResponse = await TodoListDAO.updateReview(
         reviewId,
         req.body.user_id,
-        text,
-        date,
-      )
+        text
+      );
 
-      const { error } = reviewResponse
-      if (error) {
-        res.status(400).json({ error })
-      }
+      // const { error } = reviewResponse;
+      // if (error) {
+      //   res.status(400).json({ error });
+      // }
 
-      if (reviewResponse.modifiedCount === 0) {
-        throw new Error(
-          "unable to update review - user may not be original poster",
-        )
-      }
+      // if (reviewResponse.modifiedCount === 0) {
+      //   throw new Error(
+      //     "unable to update review - user may not be original poster"
+      //   );
+      // }
 
-      res.json({ status: "success" })
+      res.json({ status: "success" });
     } catch (e) {
-      res.status(500).json({ error: e.message })
+      res.status(500).json({ error: e.message });
     }
   }
+
+  static async apiDeleteTodo(req, res, next) {
+    try {
+      const reviewId = req.body.review_id;
+      
+      const reviewResponse = await TodoListDAO. deleteTodo(
+        reviewId,
+      );
+
+     
+      res.json({ status: "success" });
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  }
+
 }
