@@ -35,9 +35,7 @@ export default class TodosController {
       try {
         const id = req.params.id;
 
-        // if (!isValidObjectId(id)) { 
-        //   return res.status(400).json({ error: "Invalid ID" });
-        // }
+      
         if (!id) {
           return res.status(400).json({ error: "Missing or invalid ID" });
         }

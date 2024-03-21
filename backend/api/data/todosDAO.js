@@ -22,34 +22,32 @@ export default class TodoListDAO {
     filters = null,
     page = 0,
     persuasionPerPage = 5,
-  } = {}) {
-    let query;
+  }) {
+    let query = {};
     if (filters) {
       if ("title" in filters) {
-        query = { title: { $search: filters["title"] } };
+        query.title =  filters["title"];
       } else if ("status" in filters) {
-        query = { status: { $eq: filters["status"] } };
+        query.status =  filters["status"];
       }
     }
-
-    let cursor;
+  
 
     try {
-      cursor = await persuasion.find(query);
-    } catch (e) {
-      console.error(`Unable to issue find command, ${e}`);
-      return { todoList: [] };
-    }
-    const displayCursor = cursor
+      const sortedQuery = { ...query }; // Copy query for sorting
+      // sortedQuery.sort = { _id: 1 };
+
+      const todoList = await persuasion
+      .find(sortedQuery)
+      .sort({ status: -1 })
       .limit(persuasionPerPage)
-      .skip(persuasionPerPage * page);
+      .skip(persuasionPerPage * page)
+      .toArray();
 
-    try {
-      const todoList = await displayCursor.toArray();
       return { todoList };
     } catch (e) {
       console.error(
-        `Unable to convert cursor to array or problem counting documents, ${e}`
+        `error fetching todo list, ${e}`
       );
       return { todoList: [] };
     }
