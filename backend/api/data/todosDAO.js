@@ -69,7 +69,7 @@ export default class TodoListDAO {
       throw e;
     }
   }
-//Creates a new task. Expects `title`, `description`, and `status` in the request body.
+
   static async addTodo(title, description, status) {
     try {
       const newTodo = {
@@ -80,6 +80,21 @@ export default class TodoListDAO {
       return await persuasion.insertOne(newTodo);
     } catch (e) {
       console.error(`Unable to post review: ${e}`);
+      return { error: e };
+    }
+  }
+
+  // Updates the task identified by `id`. Can update `title`, `description`, and/or `status`
+  static async updateTodo(taskId, title, description, status) {
+    try {
+      const updateResponse = await persuasion.updateOne(
+        { _id: taskId,},
+        { $set: { title: title, description: description, status:status } }
+      );
+
+      return updateResponse;
+    } catch (e) {
+      console.error(`Unable to update review: ${e}`);
       return { error: e };
     }
   }
