@@ -102,7 +102,7 @@ export default class TodoListDAO {
   static async deleteTodo(taskId) {
     try {
       const deleteResponse = await persuasion.deleteOne({
-        _id: taskId
+        _id: new ObjectId(taskId)
       });
 
       return deleteResponse;

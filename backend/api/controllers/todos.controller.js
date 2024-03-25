@@ -104,13 +104,15 @@ export default class TodosController {
 
   static async apiDeleteTodo(req, res, next) {
     try {
-      const reviewId = req.body.review_id;
-      
+      const {id} = req.params;
+      console.log(id)
       const reviewResponse = await TodoListDAO. deleteTodo(
-        reviewId,
+        id,
       );
 
-     
+      console.log(reviewResponse)
+
+     // ? Add Validation and play around with it in the near future
       res.json({ status: "success" });
     } catch (e) {
       res.status(500).json({ error: e.message });

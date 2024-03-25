@@ -6,6 +6,6 @@ import TodosCTRL from "../controllers/todos.controller.js";
 router.route("/").get(TodosCTRL.apiGetTodos);
 router.route("/id/:id").get(TodosCTRL.apiGetTodoByID);
 router.route("/").post(TodosCTRL.apiAddTodo);
-router.route("/id/:id").delete(TodosCTRL.apiDeleteTodo);
+router.route("/:id").delete(TodosCTRL.apiDeleteTodo);
 
 export default router;
