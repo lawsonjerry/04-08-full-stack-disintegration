@@ -84,12 +84,12 @@ export default class TodoListDAO {
     }
   }
 
-  // Updates the task identified by `id`. Can update `title`, `description`, and/or `status`
-  static async updateTodo(taskId, title, description, status) {
+  // Updates the task identified by `id`.
+  static async updateTodo(taskId, status) {
     try {
       const updateResponse = await persuasion.updateOne(
-        { _id: taskId,},
-        { $set: { title: title, description: description, status:status } }
+        { _id: new ObjectId(taskId)},
+        { $set: { status:status } }
       );
 
       return updateResponse;

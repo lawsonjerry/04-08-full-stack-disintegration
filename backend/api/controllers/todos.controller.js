@@ -76,25 +76,11 @@ export default class TodosController {
 
   static async apiUpdateTodo(req, res, next) {
     try {
-      const reviewId = req.body.review_id;
-      const text = req.body.text;
-
-      const reviewResponse = await TodoListDAO.updateReview(
-        reviewId,
-        req.body.user_id,
-        text
-      );
-
-      // const { error } = reviewResponse;
-      // if (error) {
-      //   res.status(400).json({ error });
-      // }
-
-      // if (reviewResponse.modifiedCount === 0) {
-      //   throw new Error(
-      //     "unable to update review - user may not be original poster"
-      //   );
-      // }
+      const { id } = req.params;
+      const status  = req.body.status;
+  
+      const reviewResponse = await TodoListDAO.updateTodo(id,status)
+      
 
       res.json({ status: "success" });
     } catch (e) {
@@ -104,19 +90,16 @@ export default class TodosController {
 
   static async apiDeleteTodo(req, res, next) {
     try {
-      const {id} = req.params;
-      console.log(id)
-      const reviewResponse = await TodoListDAO. deleteTodo(
-        id,
-      );
+      const { id } = req.params;
+      console.log(id);
+      const reviewResponse = await TodoListDAO.deleteTodo(id);
 
-      console.log(reviewResponse)
+      console.log(reviewResponse);
 
-     // ? Add Validation and play around with it in the near future
+      // ? Add Validation and play around with it in the near future
       res.json({ status: "success" });
     } catch (e) {
       res.status(500).json({ error: e.message });
     }
   }
-
 }
