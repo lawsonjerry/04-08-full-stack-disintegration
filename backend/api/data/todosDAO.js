@@ -34,9 +34,8 @@ export default class TodoListDAO {
   
 
     try {
-      const sortedQuery = { ...query }; // Copy query for sorting
-      // sortedQuery.sort = { _id: 1 };
-
+      const sortedQuery = { ...query }; 
+     
       const todoList = await persuasion
       .find(sortedQuery)
       .sort({ status: -1 })
