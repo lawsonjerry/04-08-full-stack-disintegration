@@ -15,19 +15,24 @@ const useTaskListDataService = () => {
     }
   };
 
-  const createTask = async (data) => {
+  const createTask = async (newTaskData) => {
     try {
-      const response = await http.post("/", data);
-      console.log("Review created successfully:", response.data.persuasion); // Handle response
+      const response = await http.post("/", newTaskData);
+      if (!response.ok) {
+        throw new Error(`Failed to create task with status: ${response.status}`);
+      }
+      console.log("Task created successfully:", response.data.persuasion); // Handle response
       return response.data.persuasion;
     } catch (error) {
       console.error("Error creating task", error);
+      throw new Error ("Failed to create task. Please try again.")
     }
   };
 
   return {
     tasks, 
-    getAll
+    getAll, 
+    createTask
   }
 };
 
