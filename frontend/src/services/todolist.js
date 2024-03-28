@@ -1,4 +1,4 @@
-import http from "../http-commons";
+import http from "../http-commons.js";
 import { useState } from "react";
 
 const useTaskListDataService = () => {
@@ -7,7 +7,9 @@ const useTaskListDataService = () => {
   const getAll = async (page = 0) => {
     try {
       const response = await http.get(`?page=${page}`);
-      setTasks(response.data);
+      console.log(response.data.persuasion);
+      return response.data.persuasion;
+     
     } catch (error) {
       console.error("Error fetching tasks:", error);
     }
