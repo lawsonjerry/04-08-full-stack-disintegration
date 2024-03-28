@@ -15,6 +15,16 @@ const useTaskListDataService = () => {
     }
   };
 
+  const createTask = async (data) => {
+    try {
+      const response = await http.post("/", data);
+      console.log("Review created successfully:", response.data.persuasion); // Handle response
+      return response.data.persuasion;
+    } catch (error) {
+      console.error("Error creating task", error);
+    }
+  };
+
   return {
     tasks, 
     getAll
